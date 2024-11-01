@@ -1,24 +1,39 @@
 // App.js
 import React, { useState } from 'react';
 import LiveImageInfo from './LiveImageInfo';
+import GetImageInfo from './GetImageInfo';
 
 function App() {
   const [showLiveImageInfo, setShowLiveImageInfo] = useState(false);
+  const [showGetImageInfo, setShowGetImageInfo] = useState(false);
 
   return (
     <div style={styles.container}>
       <h1 style={styles.heading}>Live Photo App</h1>
 
       <div style={styles.buttonContainer}>
-        <button onClick={() => setShowLiveImageInfo(true)} style={styles.button}>
+        <button
+          onClick={() => {
+            setShowLiveImageInfo(true);
+            setShowGetImageInfo(false);
+          }}
+          style={styles.button}
+        >
           Live Image Information
         </button>
-        <button onClick={() => alert('Get Image Information clicked')} style={styles.buttonSecondary}>
+        <button
+          onClick={() => {
+            setShowGetImageInfo(true);
+            setShowLiveImageInfo(false);
+          }}
+          style={styles.buttonSecondary}
+        >
           Get Image Information
         </button>
       </div>
 
       {showLiveImageInfo && <LiveImageInfo />}
+      {showGetImageInfo && <GetImageInfo />}
     </div>
   );
 }
