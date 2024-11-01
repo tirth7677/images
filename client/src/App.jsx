@@ -33,6 +33,11 @@ function App() {
 
       {showLiveImageInfo && <LiveImageInfo />}
       {showGetImageInfo && <GetImageInfo />}
+
+      {/* Footer */}
+      <footer style={styles.footer}>
+        <p>&copy; {new Date().getFullYear()} All rights reserved. Tirth</p>
+      </footer>
     </div>
   );
 }
@@ -77,6 +82,13 @@ const styles = {
     fontSize: '16px',
     flex: '1 0 40%',
     maxWidth: '200px',
+  },
+  footer: {
+    textAlign: 'center',
+    marginTop: '40px',
+    padding: '10px',
+    fontSize: '14px',
+    color: '#888',
   },
 };
 

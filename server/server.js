@@ -65,6 +65,43 @@ app.post('/upload', upload.single('photo'), async (req, res) => {
   }
 });
 
+// Add this route to your server code
+app.post('/reverse-geocode', async (req, res) => {
+  try {
+    const { latitude, longitude } = req.body;
+
+    if (!latitude || !longitude) {
+      return res.status(400).json({ error: 'Latitude and longitude are required.' });
+    }
+
+    // Use Mapbox Geocoding API to get address
+    const mapboxToken = process.env.MAPBOX_TOKEN;
+    const response = await axios.get(
+      `https://api.mapbox.com/geocoding/v5/mapbox.places/${longitude},${latitude}.json`,
+      {
+        params: {
+          access_token: mapboxToken,
+          types: 'address',
+        },
+      }
+    );
+
+    if (response.data.features.length === 0) {
+      return res.status(500).json({ error: 'Failed to get address from Mapbox API.' });
+    }
+
+    const address = response.data.features[0]?.place_name || 'Address not found';
+
+    res.json({
+      address: address,
+    });
+  } catch (error) {
+    console.error(error.response?.data || error.message);
+    res.status(500).json({ error: 'An error occurred while processing the data.' });
+  }
+});
+
+
 app.get("/", (req,res)=>{
   res.send("Hello World");
 })

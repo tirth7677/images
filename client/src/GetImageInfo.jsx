@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import * as exifr from 'exifr';
+import axios from 'axios';
 
 const GetImageInfo = () => {
   const [exifData, setExifData] = useState(null);
@@ -27,14 +28,14 @@ const GetImageInfo = () => {
 
         if (metadata && Object.keys(metadata).length > 0) {
           // Extract specific EXIF data
-          setExifData({
+          const exifInfo = {
             make: metadata.Make || 'N/A',
             model: metadata.Model || 'N/A',
             dateTimeOriginal: metadata.DateTimeOriginal
               ? metadata.DateTimeOriginal.toString()
               : 'N/A',
-            latitude: metadata.latitude || 'N/A',
-            longitude: metadata.longitude || 'N/A',
+            latitude: metadata.latitude || null,
+            longitude: metadata.longitude || null,
             altitude: metadata.GPSAltitude || 'N/A',
             imageWidth: metadata.ExifImageWidth || 'N/A',
             imageHeight: metadata.ExifImageHeight || 'N/A',
@@ -48,7 +49,17 @@ const GetImageInfo = () => {
             colorSpace: metadata.ColorSpace || 'N/A',
             flash: metadata.Flash ? 'Yes' : 'No',
             imageUrl: URL.createObjectURL(file),
-          });
+          };
+
+          if (exifInfo.latitude && exifInfo.longitude) {
+            // Fetch address from server
+            const address = await getAddressFromCoordinates(exifInfo.latitude, exifInfo.longitude);
+            exifInfo.address = address;
+          } else {
+            exifInfo.address = 'N/A';
+          }
+
+          setExifData(exifInfo);
         } else {
           setError('No EXIF metadata found in this image. Displaying basic metadata.');
           extractBasicMetadata(file);
@@ -58,6 +69,21 @@ const GetImageInfo = () => {
         setError("Failed to extract metadata from the image.");
         extractBasicMetadata(file);
       }
+    }
+  };
+
+  // Function to get address from latitude and longitude
+  const getAddressFromCoordinates = async (latitude, longitude) => {
+    try {
+      const response = await axios.post('https://image-info.onrender.com/reverse-geocode', {
+        latitude: latitude,
+        longitude: longitude,
+      });
+
+      return response.data.address || 'Address not found';
+    } catch (err) {
+      console.error("Error fetching address:", err);
+      return 'Address not found';
     }
   };
 
@@ -81,6 +107,10 @@ const GetImageInfo = () => {
     <div style={styles.container}>
       <h2 style={styles.heading}>Get Image Metadata</h2>
 
+      <p style={styles.instructions}>
+        Please upload the image using your browser. You can see three dots, and when you click on that, you can see "Browse...". Click on that and then select the image.
+      </p>
+
       <input
         type="file"
         accept="image/*"
@@ -100,8 +130,9 @@ const GetImageInfo = () => {
             <p><strong>Camera Make:</strong> {exifData.make}</p>
             <p><strong>Camera Model:</strong> {exifData.model}</p>
             <p><strong>Date and Time:</strong> {exifData.dateTimeOriginal}</p>
-            <p><strong>Latitude:</strong> {exifData.latitude}</p>
-            <p><strong>Longitude:</strong> {exifData.longitude}</p>
+            <p><strong>Latitude:</strong> {exifData.latitude || 'N/A'}</p>
+            <p><strong>Longitude:</strong> {exifData.longitude || 'N/A'}</p>
+            <p><strong>Address:</strong> {exifData.address || 'N/A'}</p>
             <p><strong>Altitude:</strong> {exifData.altitude}</p>
             <p><strong>Image Width:</strong> {exifData.imageWidth} pixels</p>
             <p><strong>Image Height:</strong> {exifData.imageHeight} pixels</p>
@@ -146,6 +177,11 @@ const styles = {
     color: '#4a90e2',
     fontSize: '24px',
     marginBottom: '20px',
+  },
+  instructions: {
+    fontSize: '16px',
+    marginBottom: '10px',
+    color: '#555',
   },
   uploadInput: {
     padding: '10px',
