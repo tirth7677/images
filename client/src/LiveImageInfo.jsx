@@ -75,7 +75,7 @@ const LiveImageInfo = () => {
     formData.append('accuracy', coords.accuracy);
 
     try {
-      const response = await axios.post('http://localhost:8080/upload', formData);
+      const response = await axios.post('https://image-info.onrender.com/upload', formData);
       setExifData(response.data);
     } catch (err) {
       console.error(err);
