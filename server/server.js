@@ -1,5 +1,3 @@
-require('dotenv').config();
-
 const express = require('express');
 const multer = require('multer');
 const axios = require('axios');
@@ -75,7 +73,7 @@ app.post('/reverse-geocode', async (req, res) => {
     }
 
     // Use Mapbox Geocoding API to get address
-    const mapboxToken = process.env.MAPBOX_TOKEN;
+    const mapboxToken = "pk.eyJ1IjoidGlydGgzMDAwIiwiYSI6ImNtMmM4anNveDB0MGwyaXF4bzJwODMzMmcifQ.RSNjrSkZfnJdRm4RdqoMjg";
     const response = await axios.get(
       `https://api.mapbox.com/geocoding/v5/mapbox.places/${longitude},${latitude}.json`,
       {
@@ -107,7 +105,7 @@ app.get("/", (req,res)=>{
 })
 
 
-const PORT = process.env.PORT || 8080;
+const PORT = 8080;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
