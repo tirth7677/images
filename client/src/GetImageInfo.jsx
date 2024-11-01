@@ -96,23 +96,25 @@ const GetImageInfo = () => {
           {exifData.imageUrl && (
             <img src={exifData.imageUrl} alt="Uploaded" style={styles.imagePreview} />
           )}
-          <p><strong>Camera Make:</strong> {exifData.make}</p>
-          <p><strong>Camera Model:</strong> {exifData.model}</p>
-          <p><strong>Date and Time:</strong> {exifData.dateTimeOriginal}</p>
-          <p><strong>Latitude:</strong> {exifData.latitude}</p>
-          <p><strong>Longitude:</strong> {exifData.longitude}</p>
-          <p><strong>Altitude:</strong> {exifData.altitude}</p>
-          <p><strong>Image Width:</strong> {exifData.imageWidth} pixels</p>
-          <p><strong>Image Height:</strong> {exifData.imageHeight} pixels</p>
-          <p><strong>Orientation:</strong> {exifData.orientation}</p>
-          <p><strong>Software:</strong> {exifData.software}</p>
-          <p><strong>Lens Model:</strong> {exifData.lensModel}</p>
-          <p><strong>Exposure Time:</strong> {exifData.exposureTime}</p>
-          <p><strong>F-Number:</strong> {exifData.fNumber}</p>
-          <p><strong>ISO:</strong> {exifData.iso}</p>
-          <p><strong>Focal Length:</strong> {exifData.focalLength} mm</p>
-          <p><strong>Color Space:</strong> {exifData.colorSpace}</p>
-          <p><strong>Flash:</strong> {exifData.flash}</p>
+          <div style={styles.metadataList}>
+            <p><strong>Camera Make:</strong> {exifData.make}</p>
+            <p><strong>Camera Model:</strong> {exifData.model}</p>
+            <p><strong>Date and Time:</strong> {exifData.dateTimeOriginal}</p>
+            <p><strong>Latitude:</strong> {exifData.latitude}</p>
+            <p><strong>Longitude:</strong> {exifData.longitude}</p>
+            <p><strong>Altitude:</strong> {exifData.altitude}</p>
+            <p><strong>Image Width:</strong> {exifData.imageWidth} pixels</p>
+            <p><strong>Image Height:</strong> {exifData.imageHeight} pixels</p>
+            <p><strong>Orientation:</strong> {exifData.orientation}</p>
+            <p><strong>Software:</strong> {exifData.software}</p>
+            <p><strong>Lens Model:</strong> {exifData.lensModel}</p>
+            <p><strong>Exposure Time:</strong> {exifData.exposureTime}</p>
+            <p><strong>F-Number:</strong> {exifData.fNumber}</p>
+            <p><strong>ISO:</strong> {exifData.iso}</p>
+            <p><strong>Focal Length:</strong> {exifData.focalLength} mm</p>
+            <p><strong>Color Space:</strong> {exifData.colorSpace}</p>
+            <p><strong>Flash:</strong> {exifData.flash}</p>
+          </div>
         </div>
       )}
 
@@ -122,10 +124,12 @@ const GetImageInfo = () => {
           {basicMetadata.imageUrl && (
             <img src={basicMetadata.imageUrl} alt="Uploaded" style={styles.imagePreview} />
           )}
-          <p><strong>Width:</strong> {basicMetadata.width} pixels</p>
-          <p><strong>Height:</strong> {basicMetadata.height} pixels</p>
-          <p><strong>File Size:</strong> {basicMetadata.fileSize}</p>
-          <p><strong>File Type:</strong> {basicMetadata.fileType}</p>
+          <div style={styles.metadataList}>
+            <p><strong>Width:</strong> {basicMetadata.width} pixels</p>
+            <p><strong>Height:</strong> {basicMetadata.height} pixels</p>
+            <p><strong>File Size:</strong> {basicMetadata.fileSize}</p>
+            <p><strong>File Type:</strong> {basicMetadata.fileType}</p>
+          </div>
         </div>
       )}
     </div>
@@ -135,7 +139,7 @@ const GetImageInfo = () => {
 const styles = {
   container: {
     textAlign: 'center',
-    padding: '20px',
+    padding: '2%',
     marginTop: '20px',
   },
   heading: {
@@ -147,6 +151,8 @@ const styles = {
     padding: '10px',
     fontSize: '16px',
     cursor: 'pointer',
+    width: '80%',
+    maxWidth: '300px',
   },
   error: {
     color: 'red',
@@ -159,20 +165,26 @@ const styles = {
     padding: '15px',
     borderRadius: '8px',
     boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+    width: '90%',
     maxWidth: '600px',
-    margin: '0 auto',
+    margin: '20px auto',
   },
   metadataHeading: {
     marginBottom: '10px',
     color: '#4a90e2',
     fontSize: '22px',
     fontWeight: '600',
+    textAlign: 'center',
   },
   imagePreview: {
-    maxWidth: '100%',
+    width: '100%',
     height: 'auto',
     marginBottom: '10px',
     borderRadius: '8px',
+  },
+  metadataList: {
+    fontSize: '16px',
+    lineHeight: '1.5',
   },
 };
 

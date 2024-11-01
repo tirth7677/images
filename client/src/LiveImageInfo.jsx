@@ -1,4 +1,3 @@
-// LiveImageInfo.jsx
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import Webcam from 'react-webcam';
@@ -127,11 +126,13 @@ const LiveImageInfo = () => {
       {exifData && (
         <div style={styles.dataContainer}>
           <h2 style={styles.dataHeading}>Live Data</h2>
-          <p><strong>Address:</strong> {exifData.address}</p>
-          <p><strong>Latitude:</strong> {Number(exifData.latitude).toPrecision(10)}</p>
-          <p><strong>Longitude:</strong> {Number(exifData.longitude).toPrecision(10)}</p>
-          <p><strong>Accuracy:</strong> ±{Number(exifData.accuracy).toFixed(2)} meters</p>
-          <p><strong>Date and Time:</strong> {exifData.datetime}</p>
+          <div style={styles.dataList}>
+            <p><strong>Address:</strong> {exifData.address}</p>
+            <p><strong>Latitude:</strong> {Number(exifData.latitude).toPrecision(10)}</p>
+            <p><strong>Longitude:</strong> {Number(exifData.longitude).toPrecision(10)}</p>
+            <p><strong>Accuracy:</strong> ±{Number(exifData.accuracy).toFixed(2)} meters</p>
+            <p><strong>Date and Time:</strong> {exifData.datetime}</p>
+          </div>
         </div>
       )}
     </div>
@@ -142,6 +143,7 @@ const styles = {
   infoContainer: {
     textAlign: 'center',
     marginTop: '20px',
+    padding: '0 2%',
   },
   error: {
     color: 'red',
@@ -179,12 +181,18 @@ const styles = {
     padding: '15px',
     borderRadius: '8px',
     boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+    width: '90%',
     maxWidth: '400px',
-    margin: '0 auto',
+    margin: '20px auto',
   },
   dataHeading: {
     marginBottom: '10px',
     color: '#4a90e2',
+    textAlign: 'center',
+  },
+  dataList: {
+    fontSize: '16px',
+    lineHeight: '1.5',
   },
 };
 
