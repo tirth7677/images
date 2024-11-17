@@ -10,7 +10,7 @@ app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// Configure Multer storage
+// Configure Multer storages
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
